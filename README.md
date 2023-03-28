@@ -87,7 +87,7 @@ The output (vectors for each sentence) will be written to a file `out.txt` ready
 curl -s -k -u admin:admin -X POST -H "Content-type: application/x-ndjson" https://localhost:9200/vectors/_bulk --data-binary @out.txt
 ```
 
-Now with the vectors indexed, you can search:
+Now with the vectors indexed, you can search by sending a vector to OpenSearch to find similar documents:
 
 ```bash
 curl -s -k -u admin:admin -X GET -H "Content-type: application/json" https://localhost:9200/vectors/_search -d '
@@ -106,6 +106,7 @@ curl -s -k -u admin:admin -X GET -H "Content-type: application/json" https://loc
   ]
 }
 '
+```
 
 In this response we get the indexed documents back, along with a score for each document:
 
