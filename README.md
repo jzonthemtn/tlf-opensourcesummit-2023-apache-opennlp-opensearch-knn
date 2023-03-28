@@ -28,6 +28,25 @@ Verify the `opensearch-knn` plugin is installed:
 curl -k -u admin:admin https://localhost:9200/_cat/plugins
 ```
 
+## Creating the Index
+
+```bash
+curl -k -u admin:admin -X PUT -H "Content-type: application/json" https://localhost:9200/vectors -d '
+{
+  "settings": {
+    "index.knn": true
+  },
+  "mappings": {
+    "properties": {
+      "my_vector": {
+        "type": "knn_vector",
+        "dimension": 384
+      }
+    }
+  }
+}'
+```
+
 ## Converting a Model to ONNX
 
 This converts the model to a directory called `onnx`.

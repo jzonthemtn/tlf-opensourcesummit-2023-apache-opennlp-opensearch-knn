@@ -31,6 +31,8 @@ public class App {
 
         System.out.println(index(vector));
 
+        System.out.println(vector.length);
+
     }
 
     private static String index(final float[] vector) {
