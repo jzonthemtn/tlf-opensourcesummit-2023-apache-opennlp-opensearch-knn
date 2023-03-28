@@ -147,4 +147,4 @@ In this response we get the indexed documents back, along with a score for each 
 }
 ```
 
-We see the first document is a match 1, followed by documents 2 and 3. This makes sense given the similarity of those first two sentences and the difference in the third sentence.
+We see the first document is a match 1, followed by documents 2 and 3. This visibly makes sense given the similarity of those first two sentences and the difference in the third sentence.
