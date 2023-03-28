@@ -29,15 +29,16 @@ public class App {
         System.out.println("Normalized:");
         makeStringOutput(vector);
 
-        System.out.println(index(vector));
-
-        System.out.println(vector.length);
+        System.out.println(index(vector, 1));
 
     }
 
-    private static String index(final float[] vector) {
+    private static String index(final float[] vector, final int id) {
 
-        return "{\"my_vector\": " + Arrays.toString(vector) + "\"}\"";
+        final String v = "{\"my_vector\": " + Arrays.toString(vector) + "}";
+        final String i = "{\"index\": {\"_index\": \"vectors\", \"_id\": \"" + id + "\"}}";
+
+        return i + "\n" + v;
 
     }
 
