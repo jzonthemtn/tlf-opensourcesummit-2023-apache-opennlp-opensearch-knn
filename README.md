@@ -76,9 +76,9 @@ java -jar ./target/opennnlp-knn-jar-with-dependencies.jar /path/to/onnx/
 The Java app generates vectors for three sentences:
 
 ```
-        sentences.add("george washington was president");
-        sentences.add("abraham lincoln was president");
-        sentences.add("john likes ice cream");
+sentences.add("george washington was president");
+sentences.add("abraham lincoln was president");
+sentences.add("john likes ice cream");
 ```
 
 The output (vectors for each sentence) will be written to a file `out.txt` ready to be indexed into OpenSearch. You can now index the vectors into OpenSearch:
