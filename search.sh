@@ -1,87 +1,17 @@
-# Using Apache OpenNLP with OpenSearch k-NN Vector Search
+#!/bin/bash -e
 
-This repository is for the talk of the same name that was [presented](https://sched.co/1K5E7) at the Linux Foundation Open Source Summit 2023. This repository shows how to use [Apache OpenNLP](https://opennlp.apache.org/) to generate sentence vectors and then use those vectors for k-NN search in [OpenSearch](https://opensearch.org/).
+# To get all documents:
 
-For the presentation see [Using Apache OpenNLP with OpenSearch k-NN Vector Search](https://sched.co/1K5E7).
+# curl -s -k -u admin:admin -X POST -H "Content-type: application/json" https://localhost:9200/vectors/_search -d '
+# {
+#   "query": {
+#     "match_all": {}
+#   }
+# }
+# '
 
-## Running OpenSearch
+# To search by similarity:
 
-First, set:
-
-```bash
-sudo sysctl -w vm.max_map_count=262144
-```
-
-Now start OpenSearch:
-
-```bash
-docker-compose up
-```
-
-Verify OpenSearch is running:
-
-```bash
-curl -k -u admin:admin https://localhost:9200
-```
-
-Verify the `opensearch-knn` plugin is installed:
-
-```bash
-curl -k -u admin:admin https://localhost:9200/_cat/plugins
-```
-
-## Creating the Index
-
-```bash
-curl -k -u admin:admin -X PUT -H "Content-type: application/json" https://localhost:9200/vectors -d '
-{
-  "settings": {
-    "index.knn": true
-  },
-  "mappings": {
-    "properties": {
-      "my_vector": {
-        "type": "knn_vector",
-        "dimension": 384
-      }
-    }
-  }
-}'
-```
-
-## Converting a Model to ONNX
-
-This converts the model to a directory called `onnx`.
-
-```bash
-python3 -m pip install -r requirements.txt
-python3 convert-model.py
-```
-
-## Build the Java App
-
-```bash
-cd opennlp-knn
-mvn clean install
-```
-
-## Run the Java App
-
-Run the Java app, passing in the path to the `onnx` directory that was created above.
-
-```bash
-java -jar ./target/opennnlp-knn-jar-with-dependencies.jar /path/to/onnx/
-```
-
-The output will be written to a file `out.txt`. You can then index this file into OpenSearch:
-
-```bash
-curl -s -k -u admin:admin -X POST -H "Content-type: application/x-ndjson" https://localhost:9200/vectors/_bulk --data-binary @out.txt
-```
-
-Now with the vectors indexed, you can search:
-
-```bash
 curl -s -k -u admin:admin -X GET -H "Content-type: application/json" https://localhost:9200/vectors/_search -d '
 {
   "size": 10,
@@ -94,49 +24,7 @@ curl -s -k -u admin:admin -X GET -H "Content-type: application/json" https://loc
     }
   },
   "stored_fields": [
-    "id"
+  	"id"
   ]
 }
 '
-
-In this response we get the indexed documents back, along with a score for each document:
-
-```
-{
-  "took": 3,
-  "timed_out": false,
-  "_shards": {
-    "total": 1,
-    "successful": 1,
-    "skipped": 0,
-    "failed": 0
-  },
-  "hits": {
-    "total": {
-      "value": 3,
-      "relation": "eq"
-    },
-    "max_score": 1,
-    "hits": [
-      {
-        "_index": "vectors",
-        "_id": "1",
-        "_score": 1
-      },
-      {
-        "_index": "vectors",
-        "_id": "2",
-        "_score": 0.75490916
-      },
-      {
-        "_index": "vectors",
-        "_id": "3",
-        "_score": 0.4180176
-      }
-    ]
-  }
-}
-```
-
-We see the first document is a match 1, followed by documents 2 and 3. This makes sense given the similarity of those first two sentences and the difference in the third sentence.
-```

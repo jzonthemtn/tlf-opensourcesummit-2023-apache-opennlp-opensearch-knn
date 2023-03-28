@@ -1,8 +1,12 @@
 package com.mtnfog;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import opennlp.dl.vectors.SentenceVectorsDL;
 
@@ -16,20 +20,33 @@ public class App {
         final File MODEL_FILE_NAME = new File(onnxPath, "model.onnx");
         final File VOCAB_FILE_NAME = new File(onnxPath, "vocab.txt");
 
-        final String sentence = "george washington was president";
-
         final SentenceVectorsDL sv = new SentenceVectorsDL(MODEL_FILE_NAME, VOCAB_FILE_NAME);
 
-        final float[] vector = sv.getVectors(sentence);
+        final List<String> sentences = new LinkedList<>();
+        sentences.add("george washington was president");
+        sentences.add("abraham lincoln was president");
+        sentences.add("john likes ice cream");
 
-        makeStringOutput(vector);
+        int index = 1;
 
-        normalize(vector);
+        final BufferedWriter out = new BufferedWriter(new FileWriter("out.txt", true));
 
-        System.out.println("Normalized:");
-        makeStringOutput(vector);
+        for(final String sentence : sentences) {
 
-        System.out.println(index(vector, 1));
+            final float[] vector = sv.getVectors(sentence);
+
+            //makeStringOutput(vector);
+
+            normalize(vector);
+
+            //System.out.println("Normalized:");
+            //makeStringOutput(vector);
+
+            out.write(index(vector, index++));
+
+        }
+        
+        out.close();
 
     }
 
@@ -38,7 +55,7 @@ public class App {
         final String v = "{\"my_vector\": " + Arrays.toString(vector) + "}";
         final String i = "{\"index\": {\"_index\": \"vectors\", \"_id\": \"" + id + "\"}}";
 
-        return i + "\n" + v;
+        return i + "\n" + v + "\n";
 
     }
 
