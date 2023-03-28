@@ -1,6 +1,6 @@
 # Using Apache OpenNLP with OpenSearch k-NN Vector Search
 
-This repository is for the talk of the same name that was [presented](https://sched.co/1K5E7) at the Linux Foundation Open Source Summit 2023. This repository shows how to use Apache OpenNLP to generate sentence vectors and then use those vectors for k-NN search in OpenSearch.
+This repository is for the talk of the same name that was [presented](https://sched.co/1K5E7) at the Linux Foundation Open Source Summit 2023. This repository shows how to use [Apache OpenNLP](https://opennlp.apache.org/) to generate sentence vectors and then use those vectors for k-NN search in [OpenSearch](https://opensearch.org/).
 
 For the presentation see [Using Apache OpenNLP with OpenSearch k-NN Vector Search](https://sched.co/1K5E7).
 
