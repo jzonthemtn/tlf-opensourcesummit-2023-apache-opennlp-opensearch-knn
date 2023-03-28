@@ -10,8 +10,10 @@ import ai.onnxruntime.OrtException;
 public class App {
     public static void main(String[] args) throws IOException, OrtException {
 
-        final File MODEL_FILE_NAME = new File("/mtnfog/code/jzonthemtn/tlf-opensourcesummit-2023-apache-opennlp-opensearch-knn/onnx/model.onnx");
-        final File VOCAB_FILE_NAME = new File("/mtnfog/code/jzonthemtn/tlf-opensourcesummit-2023-apache-opennlp-opensearch-knn/onnx/vocab.txt");
+        final String onnxPath = args[0];
+
+        final File MODEL_FILE_NAME = new File(onnxPath, "model.onnx");
+        final File VOCAB_FILE_NAME = new File(onnxPath, "vocab.txt");
 
         final String sentence = "george washington was president";
 
