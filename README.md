@@ -4,6 +4,8 @@ This repository is for the talk of the same name that was [presented](https://sc
 
 For the presentation see [Using Apache OpenNLP with OpenSearch k-NN Vector Search](https://sched.co/1K5E7).
 
+If you have any questions please reach out to me through [LinkedIn](https://www.linkedin.com/in/jeffzemerick/).
+
 ## Running OpenSearch
 
 First, set:
@@ -107,6 +109,8 @@ curl -s -k -u admin:admin -X GET -H "Content-type: application/json" https://loc
 }
 '
 ```
+
+In this example we just searched for a vector that we already had, but we could have re-run the Java app to generate a vector for a different sentence and used that vector to search.
 
 In this response we get the indexed documents back, along with a score for each document:
 
