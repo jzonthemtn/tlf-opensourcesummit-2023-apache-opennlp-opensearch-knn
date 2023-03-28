@@ -1,0 +1,1 @@
+# Linux Foundation Open Source Summit - "Using Apache OpenNLP with OpenSearch k-NN Vector Search"
