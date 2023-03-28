@@ -2,6 +2,7 @@ package com.mtnfog;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import opennlp.dl.vectors.SentenceVectorsDL;
 
@@ -19,12 +20,56 @@ public class App {
 
         final SentenceVectorsDL sv = new SentenceVectorsDL(MODEL_FILE_NAME, VOCAB_FILE_NAME);
 
-        final float[] vectors = sv.getVectors(sentence);
+        final float[] vector = sv.getVectors(sentence);
 
-        makeStringOutput(vectors);
+        makeStringOutput(vector);
+
+        normalize(vector);
+
+        System.out.println("Normalized:");
+        makeStringOutput(vector);
+
+        System.out.println(index(vector));
 
     }
 
+    private static String index(final float[] vector) {
+
+        return "{\"my_vector\": " + Arrays.toString(vector) + "\"}\"";
+
+    }
+
+    private static void normalize(float[] array) {
+        float min = min(array);
+        float div = max(array) - min;
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = (array[i] - min) / div;
+        }
+
+    }
+
+    private static float min(float[] array) {
+        int i, size = array.length;
+        float m = array[0];
+
+        for (i = 1; i < size; i++) {
+            m = Math.min(m, array[i]);
+        }
+
+        return m;
+    }
+
+    private static float max(float[] array) {
+        int i, size = array.length;
+        float m = array[0];
+
+        for (i = 1; i < size; i++) {
+            m = Math.max(m, array[i]);
+        }
+
+        return m;
+    }
 
     private static void makeStringOutput(float[] v) {
 
