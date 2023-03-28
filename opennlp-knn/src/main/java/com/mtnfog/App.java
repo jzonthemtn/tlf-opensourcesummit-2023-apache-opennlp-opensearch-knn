@@ -45,7 +45,7 @@ public class App {
             out.write(index(vector, index++));
 
         }
-        
+
         out.close();
 
     }

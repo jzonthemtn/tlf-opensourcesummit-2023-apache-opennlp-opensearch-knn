@@ -73,7 +73,15 @@ Run the Java app, passing in the path to the `onnx` directory that was created a
 java -jar ./target/opennnlp-knn-jar-with-dependencies.jar /path/to/onnx/
 ```
 
-The output will be written to a file `out.txt`. You can then index this file into OpenSearch:
+The Java app generates vectors for three sentences:
+
+```
+        sentences.add("george washington was president");
+        sentences.add("abraham lincoln was president");
+        sentences.add("john likes ice cream");
+```
+
+The output (vectors for each sentence) will be written to a file `out.txt` ready to be indexed into OpenSearch. You can now index the vectors into OpenSearch:
 
 ```bash
 curl -s -k -u admin:admin -X POST -H "Content-type: application/x-ndjson" https://localhost:9200/vectors/_bulk --data-binary @out.txt
