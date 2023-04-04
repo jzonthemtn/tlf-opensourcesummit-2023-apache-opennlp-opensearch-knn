@@ -29,7 +29,7 @@ public class App {
 
         int index = 1;
 
-        final BufferedWriter out = new BufferedWriter(new FileWriter("out.txt", true));
+        final BufferedWriter out = new BufferedWriter(new FileWriter("vectors", true));
 
         for(final String sentence : sentences) {
 
