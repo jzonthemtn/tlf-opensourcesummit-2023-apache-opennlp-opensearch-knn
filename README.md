@@ -6,6 +6,14 @@ For the presentation see [Using Apache OpenNLP with OpenSearch k-NN Vector Searc
 
 If you have any questions please reach out to me through [LinkedIn](https://www.linkedin.com/in/jeffzemerick/).
 
+## Dependencies
+
+You need a few things to run the commands listed in this file:
+
+* Docker and `docker-compose`
+* Java 11 and Maven
+* Python3
+
 ## Running OpenSearch
 
 First, set:
